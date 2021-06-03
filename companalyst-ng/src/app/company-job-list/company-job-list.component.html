@@ -1,48 +1,47 @@
 <h3>Company Job List</h3>
 
-<div id='divJobList'>
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<div id='divJobSearch'>
+  <app-search-bar></app-search-bar>
+</div>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="CompanyJobCode">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Code </th>
-    <td mat-cell *matCellDef="let element"> {{element.CompanyJobCode}} </td>
-  </ng-container>
+<div id='divJobListExpandable'>
+  <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+  
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="CompanyJobTitle">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Title </th>
-    <td mat-cell *matCellDef="let element"> {{element.CompanyJobTitle}} </td>
-  </ng-container>
+          <div class="example-element-weight">
+            {{element.CompanyJobDesc}}
+            <span class="example-element-weight"> -- Comp Analyst </span>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  
+  </table>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="JobCategory">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Category </th>
-    <td mat-cell *matCellDef="let element"> {{element.JobCategory}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="CompanyJobDesc">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.CompanyJobDesc}} </td>
-  </ng-container>
-
- <!-- Symbol Column -->
- <ng-container matColumnDef="JobLevel">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Level </th>
-    <td mat-cell *matCellDef="let element"> {{element.JobLevel}} </td>
-  </ng-container>
-
- <!-- Symbol Column -->
- <ng-container matColumnDef="JobFlsaStatus">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> FLSA Status </th>
-    <td mat-cell *matCellDef="let element"> {{element.JobFlsaStatus}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 
 </div>
+
+
+
+
+
+
+
+
+

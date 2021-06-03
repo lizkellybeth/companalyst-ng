@@ -4,17 +4,26 @@ import { CompanyJob } from '../company-job';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-company-job-list',
   templateUrl: './company-job-list.component.html',
-  styleUrls: ['./company-job-list.component.css']
+  styleUrls: ['./company-job-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class CompanyJobListComponent implements OnInit, AfterViewInit {
 
   companyJobs: CompanyJob[] = []
   dataSource = new MatTableDataSource(this.companyJobs);
-  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'CompanyJobDesc', 'JobLevel', 'JobFlsaStatus'];
+  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFlsaStatus'];
+  expandedElement: CompanyJob | null;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
