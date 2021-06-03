@@ -1,0 +1,48 @@
+<h3>Company Job List</h3>
+
+<div id='divJobList'>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="CompanyJobCode">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Code </th>
+    <td mat-cell *matCellDef="let element"> {{element.CompanyJobCode}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="CompanyJobTitle">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Title </th>
+    <td mat-cell *matCellDef="let element"> {{element.CompanyJobTitle}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="JobCategory">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Category </th>
+    <td mat-cell *matCellDef="let element"> {{element.JobCategory}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="CompanyJobDesc">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.CompanyJobDesc}} </td>
+  </ng-container>
+
+ <!-- Symbol Column -->
+ <ng-container matColumnDef="JobLevel">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Level </th>
+    <td mat-cell *matCellDef="let element"> {{element.JobLevel}} </td>
+  </ng-container>
+
+ <!-- Symbol Column -->
+ <ng-container matColumnDef="JobFlsaStatus">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> FLSA Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.JobFlsaStatus}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+</div>
