@@ -1,10 +1,12 @@
 import { CompanyJobListService } from './../company-job-list.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { CompanyJob } from '../company-job';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { AutofillMonitor } from '@angular/cdk/text-field';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-company-job-list',
@@ -18,7 +20,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]),
   ],
 })
-export class CompanyJobListComponent implements OnInit, AfterViewInit {
+export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   companyJobs: CompanyJob[] = []
   dataSource = new MatTableDataSource(this.companyJobs);
@@ -28,7 +30,13 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service: CompanyJobListService) { }
+  selectedFilter = ""
+  searchForm = this.formBuilder.group({
+    searchText: [''],
+    searchField: ['']
+  })
+  
+  constructor(private service: CompanyJobListService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.fetchCompanyJobList()
@@ -37,6 +45,27 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy() {
+    
+  }
+
+  clickSearch(){
+    console.log("hey! " + JSON.stringify(this.searchForm.value['searchText']));
+    var text: string = this.searchForm.value['searchText'];
+    var field: string = this.searchForm.value['searchField'];
+    //console.log("field: " + field + " -- text: " + text)
+    var filteredJobs : CompanyJob[] = []
+    for (var job of this.companyJobs){
+      var checkField: string = job[field]
+      if (checkField.includes(text)){
+        console.log("field: " + field + " -- text: " + text)
+        filteredJobs.push(job)
+      }
+    }
+    this.dataSource = new MatTableDataSource(filteredJobs);
+    this.ngAfterViewInit();
   }
 
   public fetchCompanyJobList() {

@@ -10,13 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+
+import {MatInputModule} from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyJobListComponent,
-    SearchBarComponent
+    CompanyJobListComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,11 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
