@@ -24,7 +24,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
 
   companyJobs: CompanyJob[] = []
   dataSource = new MatTableDataSource(this.companyJobs);
-  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFlsaStatus'];
+  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFLSAStatus'];
   expandedElement: CompanyJob | null;
 
   @ViewChild(MatSort) sort: MatSort;
