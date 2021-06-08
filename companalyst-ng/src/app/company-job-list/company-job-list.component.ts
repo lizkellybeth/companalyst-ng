@@ -71,7 +71,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
             }
           }
         }
-        if ((job[column]) && (job["CompanyJobDesc"].includes(text))) {
+        if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(text))) {
           if (!filteredJobs.includes(job)) {
             filteredJobs.push(job)
           }

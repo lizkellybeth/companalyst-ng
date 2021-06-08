@@ -6,7 +6,7 @@
     <mat-form-field >
       <mat-label>Filter on...</mat-label>
       <select formControlName="searchFilter" matNativeControl>
-        <option value="">No Filter</option>
+        <option value="">&nbsp;</option>
         <option value="{{column}}" *ngFor="let column of displayedColumns">{{column}}</option>
         <option value="CompanyJobDesc">CompanyJobDesc</option>
       </select>
