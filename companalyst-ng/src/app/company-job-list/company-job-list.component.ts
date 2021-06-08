@@ -33,7 +33,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   selectedFilter = ""
   searchForm = this.formBuilder.group({
     searchText: [''],
-    searchField: ['']
+    searchFilter: ['']
   })
   
   constructor(private service: CompanyJobListService, private formBuilder: FormBuilder) { }
@@ -51,17 +51,31 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
     
   }
 
-  clickSearch(){
+  clickSearch() {
     console.log("hey! " + JSON.stringify(this.searchForm.value['searchText']));
     var text: string = this.searchForm.value['searchText'];
-    var field: string = this.searchForm.value['searchField'];
-    //console.log("field: " + field + " -- text: " + text)
-    var filteredJobs : CompanyJob[] = []
-    for (var job of this.companyJobs){
-      var checkField: string = job[field]
-      if (checkField.includes(text)){
-        console.log("field: " + field + " -- text: " + text)
-        filteredJobs.push(job)
+    var field: string = this.searchForm.value['searchFilter'];
+    var filteredJobs: CompanyJob[] = []
+    for (var job of this.companyJobs) {
+      if (field.length > 0) {//ie., a filter has been selected...
+        var checkField: string = job[field]
+        if (checkField.includes(text)) {
+          filteredJobs.push(job)
+        }
+      }
+      else {// no filter, check every field ...
+        for (var column of this.displayedColumns) {
+          if ((job[column]) && (job[column].includes(text))) {
+            if (!filteredJobs.includes(job)) {
+              filteredJobs.push(job)
+            }
+          }
+        }
+        if ((job[column]) && (job["CompanyJobDesc"].includes(text))) {
+          if (!filteredJobs.includes(job)) {
+            filteredJobs.push(job)
+          }
+        }
       }
     }
     this.dataSource = new MatTableDataSource(filteredJobs);

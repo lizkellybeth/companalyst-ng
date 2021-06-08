@@ -40,7 +40,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 
-.mat-paginator{
+.mat-paginatorx{
   display: inline-block;
 }
 
@@ -54,6 +54,13 @@ tr.example-element-row:not(.example-expanded-row):active {
   display: inline-block;
 }
 
-.example-full-widthx {
+.example-full-width {
   width: 100%;
+}
+
+.mat-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  margin-right: 20px;
 }

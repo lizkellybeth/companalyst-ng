@@ -5,6 +5,6 @@ export interface CompanyJob {
     JobCategory: string
     CompanyJobDesc: string
     JobLevel: string
-    JobFlsaStatus: string
+    JobFLSAStatus: string
 
 }
