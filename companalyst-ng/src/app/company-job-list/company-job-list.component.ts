@@ -54,33 +54,44 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   clickSearch() {
     console.log("hey! " + JSON.stringify(this.searchForm.value['searchText']));
     var text: string = this.searchForm.value['searchText'];
-    var field: string = this.searchForm.value['searchFilter'];
+    var filter: string = this.searchForm.value['searchFilter'];
     var filteredJobs: CompanyJob[] = []
     for (var job of this.companyJobs) {
-      if (field.length > 0) {//ie., a filter has been selected...
-        var checkField: string = job[field]
-        if (checkField.includes(text)) {
-          filteredJobs.push(job)
+      if (text.length > 0) {
+        if (filter.length > 0) {// filter has been selected...
+          var checkField: string = job[filter]
+          if (checkField.includes(text)) {
+            filteredJobs.push(job)
+          }
         }
-      }
-      else {// no filter, check every field ...
-        for (var column of this.displayedColumns) {
-          if ((job[column]) && (job[column].includes(text))) {
+        else {// no filter, check every field ...
+          for (var column of this.displayedColumns) {
+            if ((job[column]) && (job[column].includes(text))) {
+              if (!filteredJobs.includes(job)) {
+                filteredJobs.push(job)
+              }
+            }
+          }
+          //CompanyJobDesc is not included in the table columns
+          if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(text))) {
             if (!filteredJobs.includes(job)) {
               filteredJobs.push(job)
             }
           }
         }
-        if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(text))) {
-          if (!filteredJobs.includes(job)) {
-            filteredJobs.push(job)
-          }
-        }
+        this.dataSource = new MatTableDataSource(filteredJobs);
+        this.ngAfterViewInit();
+    
+      } else {
+        //no search text, do nothing
       }
     }
-    this.dataSource = new MatTableDataSource(filteredJobs);
-    this.ngAfterViewInit();
   }
+
+  clickClear() {
+    this.dataSource = new MatTableDataSource(this.companyJobs);
+    this.ngAfterViewInit();
+}
 
   public fetchCompanyJobList() {
     this.service.fetchCompanyJobList()
