@@ -109,6 +109,7 @@ formx {
   border-width: 0px;
   margin-left: 15px;
   margin-right: 15px;
+  border-radius: 10px;
 }
 
 #divJobListExpandable {
@@ -118,4 +119,25 @@ formx {
 
 .mat-form-field-appearance-legacy .mat-form-field-wrapper .mat-form-field-wrapper .ng-tns-c82-1 {
   padding-bottom: 0px;
+}
+
+.searchGlass {
+  margin-left: -10px;
+  margin-right: 20px
+}
+
+.filterFunnel {
+  float: left;
+  margin-top: 20px;
+}
+
+.hidden{
+  display:none;
+}
+
+.cafieldgroup{
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 5px
 }

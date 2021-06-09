@@ -3,27 +3,30 @@
 <div id='divJobSearch' class='mat-elevation-z6'>
   <form [formGroup]="searchForm" class="example-form">
 
-    <mat-form-field id="filter-field">
-      <mat-label>Filter on...</mat-label>
-      <select formControlName="searchFilter" matNativeControl >
-        <option value="">&nbsp;</option>
-        <option value="{{column}}" *ngFor="let column of displayedColumns">{{column}}</option>
-        <option value="CompanyJobDesc">CompanyJobDesc</option>
-      </select>
-    </mat-form-field>
+      <mat-form-field id="filter-field">
+        <mat-label>Filter on...</mat-label>
+        <select formControlName="searchFilter" matNativeControl>
+          <option value="">&nbsp;</option>
+          <option value="{{column}}" *ngFor="let column of displayedColumns">{{column}}</option>
+          <option value="CompanyJobDesc">CompanyJobDesc</option>
+        </select>
+      </mat-form-field>
+      <i class="fa fa-filter filterFunnel" aria-hidden="true"></i>
 
-    <mat-form-field id="search-field">
-      <mat-label>Search Text</mat-label>
-      <input formControlName="searchText" matInput placeholder="Some text" value="">
-    </mat-form-field>
-    
-    <button mat-raised-button (click)='clickSearch()'>Submit</button>
-    <button mat-raised-button (click)='clickClear()'>Clear</button>
+      <mat-form-field id="search-field">
+        <mat-label>Search Text</mat-label>
+        <input formControlName="searchText" matInput placeholder="Some text" value="">
+      </mat-form-field>
+      <i class="fa fa-search fa-1 searchGlass" aria-hidden="true" (click)='clickSearch()'></i>
+
+      <button class='hidden' mat-raised-button (click)='clickSearch()'>Submit</button>
+      <button mat-raised-button (click)='clickClear()'>Clear</button>
+
+
   </form>
 
+
 </div>
-
-
 
 <div id='divJobListExpandable'  class="mat-elevation-z6">
   <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
