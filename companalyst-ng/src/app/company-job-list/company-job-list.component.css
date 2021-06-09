@@ -67,30 +67,13 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 #search-field{
   display: inline-block;
-  width: 35%;
+  width: 40%;
 }
 
 #filter-field{
   display: inline-block;
   float: left;
-  width: 35%;
-}
-
-div mat-form-field * {
-  padding-bottom: 0px;
-}
-
-formx{
-  height: 20px;
-  display: inline-block;
-  width: 70%;
-  border-style: dotted;
-  border-width: 1px;
-}
-
-formx {
-  height: 100%;
-  width: 100%
+  width: 40%;
 }
 
 #btn-div{

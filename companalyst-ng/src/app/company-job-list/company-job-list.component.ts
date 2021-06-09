@@ -58,7 +58,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
     var filteredJobs: CompanyJob[] = []
     for (var job of this.companyJobs) {
       if (text.length > 0) {
-        if (filter.length > 0) {// filter has been selected...
+        if (filter && filter.length > 0) {// filter has been selected...
           var checkField: string = job[filter]
           if (checkField.includes(text)) {
             filteredJobs.push(job)
@@ -91,6 +91,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   clickClear() {
     this.dataSource = new MatTableDataSource(this.companyJobs);
     this.ngAfterViewInit();
+    this.searchForm.reset();
 }
 
   public fetchCompanyJobList() {
