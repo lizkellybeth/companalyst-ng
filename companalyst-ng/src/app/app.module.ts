@@ -14,11 +14,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTabsModule} from '@angular/material/tabs';
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyJobListComponent
+    CompanyJobListComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

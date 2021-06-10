@@ -1,0 +1,136 @@
+table {
+    width: 100%;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  #divJobListExpandable{
+    padding: 16px;
+  }
+  
+  #divJobSearch{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: right;
+  }
+  
+  
+  .mat-paginatorx{
+    display: inline-block;
+  }
+  
+  #search-form {
+    display: inline-block;
+  }
+  
+  .example-form {
+    min-widthx: 150px;
+    max-widthx: 500px;
+    display: block;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    margin-right: 20px;
+  }
+  
+  #search-field{
+    display: inline-block;
+    width: 40%;
+  }
+  
+  #filter-field{
+    display: inline-block;
+    float: left;
+    width: 40%;
+  }
+  
+  #btn-div{
+    display: inline-block;
+    float: right;
+  }
+  
+  #divEmployeeSearch:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  #divEmployeeSearch{
+    border-style:solid;
+    border-width: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+  }
+  
+  #divEmployeeListExpandable {
+    margin: 15px;
+    margin-right: 15px;
+  }
+  
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper .mat-form-field-wrapper .ng-tns-c82-1 {
+    padding-bottom: 0px;
+  }
+  
+  .searchGlass {
+    margin-left: -10px;
+    margin-right: 20px
+  }
+  
+  .filterFunnel {
+    float: left;
+    margin-top: 20px;
+  }
+  
+  .hidden{
+    display:none;
+  }
+  
+  .cafieldgroup{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 5px
+  }
+  
+  h5 {
+    text-align: center;
+  }
+  
+  .jobDesc {
+    font-family: Arial, Helvetica, sans-serif;
+    color:rgb(99, 99, 99);
+  }
