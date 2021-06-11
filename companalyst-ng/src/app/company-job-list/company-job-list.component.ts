@@ -1,3 +1,4 @@
+import { JobDetailsService } from './../job-details.service';
 import { CompanyJobListService } from './../company-job-list.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { CompanyJob } from '../company-job';
@@ -7,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { AutofillMonitor } from '@angular/cdk/text-field';
 import { FormBuilder } from '@angular/forms';
+import { JobDetails } from '../job-details';
 
 @Component({
   selector: 'app-company-job-list',
@@ -23,6 +25,7 @@ import { FormBuilder } from '@angular/forms';
 export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   companyJobs: CompanyJob[] = []
+  jobDetails: JobDetails[] = [];
   dataSource = new MatTableDataSource(this.companyJobs);
   displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFLSAStatus'];
   expandedElement: CompanyJob | null;
@@ -36,7 +39,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
     searchFilter: ['']
   })
   
-  constructor(private service: CompanyJobListService, private formBuilder: FormBuilder) { }
+  constructor(private jobListService: CompanyJobListService, private jobDetailsService: JobDetailsService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.fetchCompanyJobList()
@@ -53,27 +56,27 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
 
   clickSearch() {
     console.log("hey! " + JSON.stringify(this.searchForm.value['searchText']));
-    var text: string = this.searchForm.value['searchText'];
-    var filter: string = this.searchForm.value['searchFilter'];
+    var searchText: string = this.searchForm.value['searchText'];
+    var searchFilter: string = this.searchForm.value['searchFilter'];
     var filteredJobs: CompanyJob[] = []
     for (var job of this.companyJobs) {
-      if (text.length > 0) {
-        if (filter && filter.length > 0) {// filter has been selected...
-          var checkField: string = job[filter]
-          if (checkField.includes(text)) {
+      if (searchText.length > 0) {
+        if (searchFilter && searchFilter.length > 0) {// filter has been selected...
+          var checkField: string = String(job[searchFilter]);
+          if (checkField.includes(searchText)) {
             filteredJobs.push(job)
           }
         }
         else {// no filter, check every field ...
           for (var column of this.displayedColumns) {
-            if ((job[column]) && (job[column].includes(text))) {
+            if ((job[column]) && (job[column].includes(searchText))) {
               if (!filteredJobs.includes(job)) {
                 filteredJobs.push(job)
               }
             }
           }
           //CompanyJobDesc is not included in the table columns
-          if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(text))) {
+          if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(searchText))) {
             if (!filteredJobs.includes(job)) {
               filteredJobs.push(job)
             }
@@ -92,15 +95,32 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
     this.dataSource = new MatTableDataSource(this.companyJobs);
     this.ngAfterViewInit();
     this.searchForm.reset();
-}
+  }
+
+  clickDetails(job: CompanyJob){
+    console.log("JOBCODE: [" + job.CompanyJobCode + "]");
+    this.fetchJobDetails(job.CompanyJobCode);
+  }
 
   public fetchCompanyJobList() {
-    this.service.fetchCompanyJobList()
+    this.jobListService.fetchCompanyJobList()
       .then(res => {
         console.log("fetched result: " + (res ));
         this.companyJobs = res;
         this.dataSource = new MatTableDataSource(this.companyJobs);
         this.ngAfterViewInit();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+  
+  public fetchJobDetails(jobCode: string) {
+    this.jobDetailsService.fetchJobDetails(jobCode)
+      .then(res => {
+        console.log("fetched result: " + (res ));
+        var details: JobDetails = res as JobDetails;
+        console.log("DETAILS: [" + details.CompanyJobCode + "]");
       })
       .catch(err => {
         console.error(err);
