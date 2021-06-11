@@ -99,7 +99,15 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
 
   clickDetails(job: CompanyJob){
     console.log("JOBCODE: [" + job.CompanyJobCode + "]");
-    this.fetchJobDetails(job.CompanyJobCode);
+    this.fetchJobDetails(job);
+  }
+
+  showDetails(job: CompanyJob): string{
+    if (job.Details != null){
+      return job.Details.CompanyJobTitle;
+    } else {
+      return "fetching...";
+    }
   }
 
   public fetchCompanyJobList() {
@@ -115,12 +123,17 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
       });
   }
   
-  public fetchJobDetails(jobCode: string) {
+  public fetchJobDetails(job: CompanyJob) {
+    var jobCode = job.CompanyJobCode;
     this.jobDetailsService.fetchJobDetails(jobCode)
       .then(res => {
         console.log("fetched result: " + (res ));
         var details: JobDetails = res as JobDetails;
         console.log("DETAILS: [" + details.CompanyJobCode + "]");
+        job.Details = details;
+        this.companyJobs = [...this.companyJobs];        
+        this.dataSource = new MatTableDataSource(this.companyJobs);
+        this.ngAfterViewInit();
       })
       .catch(err => {
         console.error(err);

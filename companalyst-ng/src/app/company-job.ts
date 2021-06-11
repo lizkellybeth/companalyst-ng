@@ -1,3 +1,4 @@
+import { JobDetails } from './job-details';
 export interface CompanyJob {
 
     CompanyJobCode: string
@@ -6,5 +7,7 @@ export interface CompanyJob {
     CompanyJobDesc: string
     JobLevel: string
     JobFLSAStatus: string
+
+    Details: JobDetails
 
 }
