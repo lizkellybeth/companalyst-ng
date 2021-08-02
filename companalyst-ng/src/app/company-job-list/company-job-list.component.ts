@@ -5,7 +5,7 @@ import { CompanyJob } from '../company-job';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AutofillMonitor } from '@angular/cdk/text-field';
 import { FormBuilder } from '@angular/forms';
 import { JobDetails } from '../job-details';
@@ -25,6 +25,7 @@ import { JobDetails } from '../job-details';
 export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   companyJobs: CompanyJob[] = []
+  filteredJobs: CompanyJob[] = []
   jobDetails: JobDetails[] = [];
   dataSource = new MatTableDataSource(this.companyJobs);
   displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFLSAStatus'];
@@ -58,31 +59,32 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
     console.log("hey! " + JSON.stringify(this.searchForm.value['searchText']));
     var searchText: string = this.searchForm.value['searchText'];
     var searchFilter: string = this.searchForm.value['searchFilter'];
-    var filteredJobs: CompanyJob[] = []
+    this.filteredJobs = []
     for (var job of this.companyJobs) {
       if (searchText.length > 0) {
         if (searchFilter && searchFilter.length > 0) {// filter has been selected...
           var checkField: string = String(job[searchFilter]);
           if (checkField.includes(searchText)) {
-            filteredJobs.push(job)
+            this.filteredJobs.push(job)
           }
         }
         else {// no filter, check every field ...
           for (var column of this.displayedColumns) {
             if ((job[column]) && (job[column].includes(searchText))) {
-              if (!filteredJobs.includes(job)) {
-                filteredJobs.push(job)
+              if (!this.filteredJobs.includes(job)) {
+                this.filteredJobs.push(job)
               }
             }
           }
           //CompanyJobDesc is not included in the table columns
           if ((job["CompanyJobDesc"]) && (job["CompanyJobDesc"].includes(searchText))) {
-            if (!filteredJobs.includes(job)) {
-              filteredJobs.push(job)
+            if (!this.filteredJobs.includes(job)) {
+              this.filteredJobs.push(job)
             }
           }
         }
-        this.dataSource = new MatTableDataSource(filteredJobs);
+        this.filteredJobs = [...this.filteredJobs]; //alerts the angular change detection mechanism
+        this.dataSource = new MatTableDataSource(this.filteredJobs);
         this.ngAfterViewInit();
     
       } else {
@@ -92,6 +94,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   clickClear() {
+    this.filteredJobs = []
     this.dataSource = new MatTableDataSource(this.companyJobs);
     this.ngAfterViewInit();
     this.searchForm.reset();
@@ -100,14 +103,6 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   clickDetails(job: CompanyJob){
     console.log("JOBCODE: [" + job.CompanyJobCode + "]");
     this.fetchJobDetails(job);
-  }
-
-  showDetails(job: CompanyJob): string{
-    if (job.Details != null){
-      return job.Details.CompanyJobTitle;
-    } else {
-      return "fetching...";
-    }
   }
 
   public fetchCompanyJobList() {
@@ -131,8 +126,11 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
         var details: JobDetails = res as JobDetails;
         console.log("DETAILS: [" + details.CompanyJobCode + "]");
         job.Details = details;
-        this.companyJobs = [...this.companyJobs];        
-        this.dataSource = new MatTableDataSource(this.companyJobs);
+        if (this.filteredJobs.length == 0){
+          this.dataSource = new MatTableDataSource(this.companyJobs);
+        } else {
+          this.dataSource = new MatTableDataSource(this.filteredJobs);
+        }
         this.ngAfterViewInit();
       })
       .catch(err => {
