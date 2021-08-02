@@ -28,7 +28,7 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   filteredJobs: CompanyJob[] = []
   jobDetails: JobDetails[] = [];
   dataSource = new MatTableDataSource(this.companyJobs);
-  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobCategory', 'JobLevel', 'JobFLSAStatus'];
+  displayedColumns: string[] = ['CompanyJobCode', 'CompanyJobTitle', 'JobFamily', 'JobLevel', 'JobFLSAStatusDesc'];
   expandedElement: CompanyJob | null;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -119,8 +119,8 @@ export class CompanyJobListComponent implements OnInit, AfterViewInit, OnDestroy
   }
   
   public fetchJobDetails(job: CompanyJob) {
-    var jobCode = job.CompanyJobCode;
-    this.jobDetailsService.fetchJobDetails(jobCode)
+    var jdmJobDescHistoryID = job.JDMJobDescHistoryID;
+    this.jobDetailsService.fetchJobDetails(jdmJobDescHistoryID)
       .then(res => {
         console.log("fetched result: " + (res ));
         var details: JobDetails = res as JobDetails;

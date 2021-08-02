@@ -8,7 +8,7 @@ import { CompanyJob } from './company-job';
 })
 export class CompanyJobListService {
 
-  url :string  = Constants.rootUrl + "/companyjoblist";
+  url :string  = Constants.rootUrl + "companyjoblist";
 
   constructor(private http: HttpClient) {} 
 
