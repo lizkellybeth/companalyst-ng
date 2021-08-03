@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AutofillMonitor } from '@angular/cdk/text-field';
 import { FormBuilder } from '@angular/forms';
 import { JobDetails } from '../job-details';
 

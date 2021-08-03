@@ -16,11 +16,13 @@ import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import { CompanyJobComponent } from './company-job/company-job.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyJobListComponent
+    CompanyJobListComponent,
+    CompanyJobComponent
   ],
   imports: [
     BrowserModule,
